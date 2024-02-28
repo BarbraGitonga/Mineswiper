@@ -42,7 +42,7 @@ for x in range(st.GRID_SIZE):
         c.create_btn_object(center_frame)
         c.cell_btn_object.grid(column=y, row=x)
 
-print(Cell.all)
+Cell.randomize_mines()
 
 #Run the window
 root.mainloop() # opens window
