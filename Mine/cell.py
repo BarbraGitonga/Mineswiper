@@ -22,8 +22,35 @@ class Cell:
         self.cell_btn_object = btn
 
     def left_click_action(self, event):
-        print(event)
-        print("left click action")
+        if self.is_mine:
+            self.show_mine()
+        else:
+            self.show_cell()
+    
+    def get_cell_by_axis(self, x,y):
+        for cell in Cell.all:
+            if cell.x == x and cell.y == y:
+                return cell
+    def surrounded_cells(self):
+        cells = [
+            self.get_cell_by_axis(self.x -1, self.y-1),
+            self.get_cell_by_axis(self.x-1, self.y),
+            self.get_cell_by_axis(self.x -1, self.y+1),
+            self.get_cell_by_axis(self.x+1, self.y-1),
+            self.get_cell_by_axis(self.x+1, self.y),
+            self.get_cell_by_axis(self.x+1, self.y+1),
+            self.get_cell_by_axis(self.x, self.y+1)
+        ]
+        
+        cells = [cell for cell in surrounded_cells if cell is not None]
+        return cells
+        
+    def show_cell(self):
+        print(surrounded_cells())
+    
+    def show_mine(self):
+        # a logic to carry out interrupt thatthe player has lost
+        self.cell_btn_object.configure(bg='red')
 
     def right_click_action(self, event):
         print(event)
