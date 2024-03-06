@@ -1,3 +1,4 @@
+from cgitb import text
 from tkinter import Button
 import random
 import settings as st
@@ -31,6 +32,8 @@ class Cell:
         for cell in Cell.all:
             if cell.x == x and cell.y == y:
                 return cell
+
+    @property       
     def surrounded_cells(self):
         cells = [
             self.get_cell_by_axis(self.x -1, self.y-1),
@@ -42,11 +45,20 @@ class Cell:
             self.get_cell_by_axis(self.x, self.y+1)
         ]
         
-        cells = [cell for cell in surrounded_cells if cell is not None]
+        cells = [cell for cell in cells if cell is not None]
         return cells
-        
+
+    @property
+    def surrounding_mines(self):
+        counter = 0
+        for cell in self.surrounded_cells:
+            if cell.is_mine:
+                counter += 1
+
+        return counter
+
     def show_cell(self):
-        print(surrounded_cells())
+        self.cell_btn_object.configure(text=self.surrounding_mines)
     
     def show_mine(self):
         # a logic to carry out interrupt thatthe player has lost
