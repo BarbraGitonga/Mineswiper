@@ -1,6 +1,8 @@
 from tkinter import Button, Label
 import random
 import settings as st
+import ctypes
+import sys
 class Cell:
     all = []
     cell_count_label_object = None
@@ -89,9 +91,11 @@ class Cell:
             self.is_opened=True
 
     def show_mine(self):
-        # a logic to carry out interrupt thatthe player has lost
+        # a logic to carry out interrupt that the player has lost
         self.cell_btn_object.configure(bg='red')
-
+        ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine', 'Game over', 0)
+        sys.exit()
+        
     def right_click_action(self, event):
         if not self.is_mine_candidate:
             self.cell_btn_object.configure(
