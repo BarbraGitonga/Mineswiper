@@ -36,6 +36,10 @@ class Cell:
                 for cell_obj in self.surrounded_cells:
                     cell_obj.show_cell()
             self.show_cell()
+            if Cell.cell_count == st.MINES_COUNT:
+                ctypes.windll.user32.MessageBoxW(0, 'Congratulations', 'You won the game!', 0)
+        self.cell_btn_object.unbind('<Button-1>')
+        self.cell_btn_object.unbind('<Button-3>')
 
     @staticmethod
     def create_cell_count_label(location):
@@ -87,7 +91,11 @@ class Cell:
             # Replace the text of the cell count label with the newer count
             if Cell.cell_count_label_object:
                 Cell.cell_count_label_object.configure(text=f"Cells left:{Cell.cell_count}")
-        #Markc cell as opened
+                #if this was a mine candidate then fior saferty we should configure the background color to system button face
+                self.cell_btn_object.configure(
+                    bg = 'systemButtonFace'
+                )
+        #Mark cell as opened
             self.is_opened=True
 
     def show_mine(self):
@@ -95,7 +103,7 @@ class Cell:
         self.cell_btn_object.configure(bg='red')
         ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine', 'Game over', 0)
         sys.exit()
-        
+
     def right_click_action(self, event):
         if not self.is_mine_candidate:
             self.cell_btn_object.configure(
